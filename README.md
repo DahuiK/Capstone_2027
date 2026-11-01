@@ -89,7 +89,6 @@ IDs and byte layouts are still to be agreed with the power board team.
 | CAN interface | Waveshare RS485 CAN HAT (MCP2515) | To buy |
 | GPS + compass | Holybro Micro M10 (SKU 12043), Cube GPS 2 | To buy |
 | Storage | High-endurance microSD, 64 GB | To buy |
-| Pi power | 5 V 3 A+ BEC (Pi 3 B+ needs 2.5 A), into GPIO 5 V or micro-USB | To buy |
 | CAN cable | JST-GH 4-pin, Cube CAN 2 → HAT (no 5 V) | Check Cube cable set |
 | Power board (on the drone) | Charge control + sensing, DroneCAN node | ME/EE team |
 | Dock | Charging contacts, AprilTag pad, Wi-Fi AP, reference markers | ME/EE team |
