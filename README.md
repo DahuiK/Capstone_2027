@@ -84,14 +84,16 @@ IDs and byte layouts are still to be agreed with the power board team.
 | --- | --- | --- |
 | Flight controller | Cube Orange+ (ArduPilot) | Have |
 | Companion computer | Raspberry Pi 3 B+| Have |
-| Camera | Raspberry Pi Camera Module 3, standard lens, pointed down; its included 15-pin cable fits the Pi 3 | To buy |
-| Downward LiDAR | Waveshare TOF MINIF Range Sensor, SKU 33346 (standard, 0.02–20 m, UART 115200, 30 Hz) | To buy |
-| CAN interface | Waveshare RS485 CAN HAT (MCP2515) | To buy |
-| GPS + compass | Holybro Micro M10 (SKU 12043), Cube GPS 2 | To buy |
-| Storage | High-endurance microSD, 64 GB | To buy |
+| Camera | Raspberry Pi Camera Module 3, standard lens, pointed down; its included 15-pin cable fits the Pi 3 | To buy (https://www.canakit.com/raspberry-pi-camera-module-3.html?cid=cad&src=raspberrypi)|
+| Downward LiDAR | Waveshare TOF MINIF Range Sensor, SKU 33346 (standard, 0.02–20 m, UART 115200, 30 Hz) | To buy (https://www.waveshare.com/tof-minif-range-sensor.htm?sku=33346)|
+| CAN interface | Waveshare RS485 CAN HAT (MCP2515) | To buy (https://www.waveshare.com/rs485-can-hat.htm?srsltid=AYCX9vKY0JjY3zoTOWNrP2YTUaTj0V4XoGC0UCDcA_wypPEIjDI8C-CW)|
+| GPS + compass | Holybro Micro M10 (SKU 12043), Cube GPS 2 | To buy (https://holybro.com/collections/gps/products/micro-m10-gps?variant=46575593685181)|
+| Storage | High-endurance microSD, 64 GB | To buy or might Have |
 | CAN cable | JST-GH 4-pin, Cube CAN 2 → HAT (no 5 V) | Check Cube cable set |
 | Power board (on the drone) | Charge control + sensing, DroneCAN node | ME/EE team |
 | Dock | Charging contacts, AprilTag pad, Wi-Fi AP, reference markers | ME/EE team |
+
+Spend: $121.89 + shipping + Tax
 
 No RTK: day to day image alignment absorbs normal GPS error.
 
