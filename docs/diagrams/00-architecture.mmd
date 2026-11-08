@@ -1,0 +1,48 @@
+flowchart TB
+  subgraph GROUND[Groundside laptop]
+    direction LR
+    CTRL["Mission Ctrl Script<br/>scheduling + path planning"]
+    MP["Mission Planner<br/>debug only"]
+  end
+  subgraph DOCK[Charging dock]
+    direction LR
+    WIFI["Wi-Fi AP"]
+    PAD["AprilTag landing pad"]
+    CONTACTS["Charging contacts"]
+  end
+  subgraph DRONE[Drone]
+    direction TB
+    subgraph PI[Raspberry Pi 3 B+ + CAN HAT]
+      direction LR
+      UP["upload agent"]
+      CAP["capture + geotag"]
+      TAG["AprilTag tracking"]
+      MM["Mission Mgmt Script<br/>state machine"]
+    end
+    CAM["Pi Camera Module 3<br/>nadir"]
+    BUS{{"CAN bus - DroneCAN"}}
+    subgraph CUBE[Cube Orange+]
+      direction LR
+      LUA["Lua bridge<br/>custom DroneCAN commands"]
+      AP["ArduPilot<br/>flight, failsafes"]
+    end
+    GPS["Micro M10 GPS + compass"]
+    LIDAR["Downward LiDAR<br/>TELEM 2"]
+    PB["Power board<br/>charge control, sensing"]
+  end
+  CTRL <-->|"Wi-Fi: schedule, path, uploads"| WIFI
+  WIFI <--> MM
+  UP -->|Wi-Fi| WIFI
+  PAD -.->|seen by camera| TAG
+  CAM --> CAP
+  CAM --> TAG
+  CAP --> UP
+  TAG --> MM
+  MM <--> BUS
+  PB <--> BUS
+  BUS <--> LUA
+  LUA <--> AP
+  GPS --> AP
+  MP -.->|"RC + telemetry, TELEM 1"| AP
+  CONTACTS -.->|power when docked| PB
+  LIDAR --> AP

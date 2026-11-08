@@ -1,0 +1,28 @@
+flowchart TD
+  subgraph CAPTURE[In flight: per trigger]
+    direction TB
+    A[Trigger: waypoint or distance] --> B["Capture still from main stream<br/>focus locked at infinity, fast shutter"]
+    B --> C[Read sensor timestamp of frame]
+    C --> D["Interpolate pose at that time<br/>lat, lon, alt, roll, pitch, yaw<br/>from buffered DRONE_STATE messages"]
+    D --> E{GPS 3D fix and<br/>image sharp?}
+    E -- no --> F[Keep image, flag low quality]
+    E -- yes --> G[Write JPEG + EXIF GPS + UTC time]
+    F --> G
+    G --> H["Write JSON sidecar<br/>attitude, fix type, accuracy,<br/>mission ID, waypoint, camera settings"]
+    H --> I[Insert manifest row: status = pending]
+    I --> J{Storage below<br/>threshold?}
+    J -- yes --> K[Tell mission_manager to end mission early]
+    J -- no --> L([Wait for next trigger])
+  end
+  subgraph UPLOAD[On dock]
+    direction TB
+    M["Docked: landed + disarmed<br/>+ dock charging signal"] --> N{Network to<br/>server up?}
+    N -- no --> O[Retry with backoff] --> N
+    N -- yes --> P[Upload pending images, sidecars, FC flight log]
+    P --> Q{Server checksum<br/>matches SHA-256?}
+    Q -- no --> P
+    Q -- yes --> R[Mark uploaded in manifest]
+    R --> S[Delete local copies older than retention window]
+    S --> T[Notify server: mission batch complete → Flowchart 3]
+  end
+  L ~~~ M

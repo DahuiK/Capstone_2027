@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="790" viewBox="0 0 1400 790" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1400" height="790" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#212529">CAN bus — all three nodes on the drone</text>
+  <text x="40" y="78" font-size="16" fill="#495057">DroneCAN · 1 Mbps on every node · daisy chain · 120 Ω only at the two ends</text>
+
+  <!-- Node boxes -->
+  <g id="pi">
+    <rect x="80" y="110" width="360" height="360" rx="12" fill="#ffffff" stroke="#868e96" stroke-width="1.5"/>
+    <text x="100" y="146" font-size="21" font-weight="700" fill="#212529">Raspberry Pi 3 B+</text>
+    <text x="100" y="170" font-size="14" fill="#495057">Waveshare RS485 CAN HAT (MCP2515)</text>
+    <rect x="100" y="186" width="104" height="28" rx="6" fill="#e7f5ff" stroke="#1971c2"/>
+    <text x="152" y="205" font-size="14" font-weight="700" fill="#1971c2" text-anchor="middle">Node ID 20</text>
+    <text x="100" y="240" font-size="14" fill="#212529"><tspan font-weight="700">Terminator:</tspan> ON (HAT jumper)</text>
+    <text x="100" y="263" font-size="14" fill="#212529"><tspan font-weight="700">Connector:</tspan> screw terminal H / L / GND</text>
+    <text x="100" y="300" font-size="14" font-weight="700" fill="#2b8a3e">Sends</text>
+    <text x="100" y="322" font-size="14" fill="#212529">DRONE_CMD · MISSION_ITEM</text>
+    <text x="100" y="344" font-size="14" fill="#212529">LAND_TARGET · CHARGE_CMD</text>
+    <text x="100" y="381" font-size="14" font-weight="700" fill="#c92a2a">Receives</text>
+    <text x="100" y="403" font-size="14" fill="#212529">DRONE_STATE · CMD_ACK</text>
+    <text x="100" y="425" font-size="14" fill="#212529">CHARGE_STATUS · Battery info</text>
+  </g>
+
+  <g id="cube">
+    <rect x="520" y="110" width="360" height="360" rx="12" fill="#ffffff" stroke="#868e96" stroke-width="1.5"/>
+    <text x="540" y="146" font-size="21" font-weight="700" fill="#212529">Cube Orange+</text>
+    <text x="540" y="170" font-size="14" fill="#495057">CAN 2 port · Lua bridge inside ArduPilot</text>
+    <rect x="540" y="186" width="104" height="28" rx="6" fill="#e7f5ff" stroke="#1971c2"/>
+    <text x="592" y="205" font-size="14" font-weight="700" fill="#1971c2" text-anchor="middle">Node ID 10</text>
+    <text x="540" y="240" font-size="14" fill="#212529"><tspan font-weight="700">Terminator:</tspan> none (middle of bus)</text>
+    <text x="540" y="263" font-size="14" fill="#212529"><tspan font-weight="700">Connector:</tspan> JST-GH 4-pin, 5 V not used</text>
+    <text x="540" y="300" font-size="14" font-weight="700" fill="#2b8a3e">Sends</text>
+    <text x="540" y="322" font-size="14" fill="#212529">DRONE_STATE · CMD_ACK</text>
+    <text x="540" y="359" font-size="14" font-weight="700" fill="#c92a2a">Receives</text>
+    <text x="540" y="381" font-size="14" fill="#212529">DRONE_CMD · MISSION_ITEM</text>
+    <text x="540" y="403" font-size="14" fill="#212529">LAND_TARGET · CHARGE_STATUS</text>
+    <text x="540" y="425" font-size="14" fill="#212529">Battery info</text>
+  </g>
+
+  <g id="power">
+    <rect x="960" y="110" width="360" height="360" rx="12" fill="#ffffff" stroke="#868e96" stroke-width="1.5"/>
+    <text x="980" y="146" font-size="21" font-weight="700" fill="#212529">Power board</text>
+    <text x="980" y="170" font-size="14" fill="#495057">Charge control + sensing (ME/EE)</text>
+    <rect x="980" y="186" width="104" height="28" rx="6" fill="#e7f5ff" stroke="#1971c2"/>
+    <text x="1032" y="205" font-size="14" font-weight="700" fill="#1971c2" text-anchor="middle">Node ID 30</text>
+    <text x="980" y="240" font-size="14" fill="#212529"><tspan font-weight="700">Terminator:</tspan> ON (120 Ω on board)</text>
+    <text x="980" y="263" font-size="14" fill="#212529"><tspan font-weight="700">Connector:</tspan> to agree with the ME/EE team</text>
+    <text x="980" y="300" font-size="14" font-weight="700" fill="#2b8a3e">Sends</text>
+    <text x="980" y="322" font-size="14" fill="#212529">CHARGE_STATUS · Battery info</text>
+    <text x="980" y="344" font-size="14" fill="#212529">CMD_ACK</text>
+    <text x="980" y="381" font-size="14" font-weight="700" fill="#c92a2a">Receives</text>
+    <text x="980" y="403" font-size="14" fill="#212529">CHARGE_CMD</text>
+    <text x="980" y="440" font-size="13" fill="#495057">Power in from dock contacts (no CAN)</text>
+  </g>
+
+  <!-- Bus wires -->
+  <g stroke-width="4" fill="none">
+    <line x1="120" y1="550" x2="1280" y2="550" stroke="#e8590c"/>
+    <line x1="120" y1="590" x2="1280" y2="590" stroke="#1c7ed6"/>
+    <line x1="120" y1="630" x2="1280" y2="630" stroke="#343a40"/>
+  </g>
+  <text x="40" y="555" font-size="15" font-weight="700" fill="#e8590c">CAN_H</text>
+  <text x="40" y="595" font-size="15" font-weight="700" fill="#1c7ed6">CAN_L</text>
+  <text x="40" y="635" font-size="15" font-weight="700" fill="#343a40">GND</text>
+
+  <!-- Stubs: node -> wires (H, L, GND) -->
+  <g stroke-width="3">
+    <line x1="220" y1="470" x2="220" y2="550" stroke="#e8590c"/>
+    <line x1="260" y1="470" x2="260" y2="590" stroke="#1c7ed6"/>
+    <line x1="300" y1="470" x2="300" y2="630" stroke="#343a40"/>
+    <line x1="660" y1="470" x2="660" y2="550" stroke="#e8590c"/>
+    <line x1="700" y1="470" x2="700" y2="590" stroke="#1c7ed6"/>
+    <line x1="740" y1="470" x2="740" y2="630" stroke="#343a40"/>
+    <line x1="1100" y1="470" x2="1100" y2="550" stroke="#e8590c"/>
+    <line x1="1140" y1="470" x2="1140" y2="590" stroke="#1c7ed6"/>
+    <line x1="1180" y1="470" x2="1180" y2="630" stroke="#343a40"/>
+  </g>
+  <g>
+    <circle cx="220" cy="550" r="6" fill="#e8590c"/><circle cx="260" cy="590" r="6" fill="#1c7ed6"/><circle cx="300" cy="630" r="6" fill="#343a40"/>
+    <circle cx="660" cy="550" r="6" fill="#e8590c"/><circle cx="700" cy="590" r="6" fill="#1c7ed6"/><circle cx="740" cy="630" r="6" fill="#343a40"/>
+    <circle cx="1100" cy="550" r="6" fill="#e8590c"/><circle cx="1140" cy="590" r="6" fill="#1c7ed6"/><circle cx="1180" cy="630" r="6" fill="#343a40"/>
+  </g>
+
+  <!-- Terminators at the two ends (between CAN_H and CAN_L) -->
+  <g>
+    <line x1="120" y1="550" x2="120" y2="556" stroke="#495057" stroke-width="2"/>
+    <rect x="110" y="556" width="20" height="28" rx="3" fill="#fff3bf" stroke="#495057" stroke-width="2"/>
+    <line x1="120" y1="584" x2="120" y2="590" stroke="#495057" stroke-width="2"/>
+    <text x="140" y="576" font-size="14" font-weight="700" fill="#212529">120 Ω</text>
+    <line x1="1280" y1="550" x2="1280" y2="556" stroke="#495057" stroke-width="2"/>
+    <rect x="1270" y="556" width="20" height="28" rx="3" fill="#fff3bf" stroke="#495057" stroke-width="2"/>
+    <line x1="1280" y1="584" x2="1280" y2="590" stroke="#495057" stroke-width="2"/>
+    <text x="1260" y="576" font-size="14" font-weight="700" fill="#212529" text-anchor="end">120 Ω</text>
+  </g>
+
+  <!-- Notes -->
+  <text x="40" y="690" font-size="15" fill="#212529"><tspan font-weight="700">All nodes:</tspan> DroneCAN NodeStatus heartbeat at 1 Hz. The Lua bridge triggers RTL if the Pi is silent for 2 s in flight.</text>
+  <text x="40" y="718" font-size="15" fill="#212529"><tspan font-weight="700">Wiring:</tspan> twisted pair for CAN_H / CAN_L · shared GND · don't link 5 V between boards · branches off the main line under 30 cm.</text>
+  <text x="40" y="746" font-size="15" fill="#212529"><tspan font-weight="700">Check:</tspan> power off, measure CAN_H to CAN_L ≈ 60 Ω (≈ 120 Ω means a terminator is missing; ≈ 40 Ω means one too many).</text>
+</svg>

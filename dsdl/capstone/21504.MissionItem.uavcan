@@ -1,0 +1,6 @@
+# MISSION_ITEM: Pi -> Cube, before each flight. Answered by CmdAck (seq = index).
+uint16 index
+uint16 total
+int32 lat_e7              # degrees * 1e7
+int32 lon_e7              # degrees * 1e7
+float32 alt_m             # metres above home

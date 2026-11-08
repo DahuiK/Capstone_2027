@@ -1,0 +1,9 @@
+# Onboard code (Raspberry Pi 5, and the Ubuntu VM for simulation)
+# picamera2 comes from apt on the Pi (sudo apt install python3-picamera2), not pip
+dronecan
+python-can
+opencv-python-headless
+pupil-apriltags
+piexif
+psutil
+pyyaml

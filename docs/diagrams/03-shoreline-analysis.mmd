@@ -1,0 +1,15 @@
+flowchart TD
+  A[Day N batch uploaded] --> B["Pair each image with day N-1<br/>image at the same waypoint ID"]
+  B --> C["Quality check per pair<br/>blur, exposure, tilt,<br/>position offset, lake level difference"]
+  C --> D{Pair usable?}
+  D -- no --> E[Skip pair, log reason]
+  D -- yes --> F["Feature extraction: segment<br/>water / sand / vegetation in both images"]
+  F --> G["Detect keypoints on stable land only<br/>water masked out, it moves"]
+  G --> H["Match keypoints + RANSAC homography<br/>warp day N onto day N-1"]
+  H --> I{Alignment error<br/>under threshold?}
+  I -- no --> E
+  I -- yes --> J["Extract shoreline boundary<br/>from both aligned masks"]
+  J --> K["Measure pixel shift along transects<br/>perpendicular to day N-1 line"]
+  K --> L["Pixels → metres<br/>GSD from altitude, or reference markers"]
+  L --> M["Outputs: shift per transect in m,<br/>before/after overlay, CSV, storm report"]
+  M --> N[Dashboard for researchers]

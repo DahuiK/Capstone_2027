@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 1800 1200" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#495057"/></marker>
+    <marker id="arrP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c92a2a"/></marker>
+  </defs>
+  <rect width="1800" height="1200" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="30" y="42" font-size="26" font-weight="700" fill="#212529">Capstone_2027 — full system wiring: drone, charging station, ground</text>
+  <text x="30" y="70" font-size="15" fill="#495057">Solid = confirmed · <tspan fill="#e67700" font-weight="700">amber dashed = to confirm with ME/EE</tspan> · A / B / C = wireless or optical links (see key)</text>
+
+  <!-- Regions -->
+  <rect x="20" y="90" width="1110" height="700" rx="14" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="40" y="118" font-size="17" font-weight="700" fill="#495057">DRONE</text>
+  <rect x="20" y="810" width="1110" height="370" rx="14" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="40" y="838" font-size="17" font-weight="700" fill="#495057">CHARGING STATION (dock)</text>
+  <rect x="1150" y="90" width="630" height="1090" rx="14" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="1170" y="118" font-size="17" font-weight="700" fill="#495057">GROUND</text>
+
+  <!-- ================= DRONE ================= -->
+  <!-- Raspberry Pi 5 -->
+  <rect x="50" y="140" width="300" height="230" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="66" y="166" font-size="17" font-weight="700" fill="#212529">Raspberry Pi 3 B+ (1 GB)</text>
+  <text x="66" y="188" font-size="13" fill="#495057">Mission Mgmt Script · capture + geotag</text>
+  <text x="66" y="206" font-size="13" fill="#495057">AprilTag tracking · upload agent</text>
+  <text x="66" y="228" font-size="13" fill="#212529"><tspan font-weight="700">Node ID 20</tspan></text>
+  <rect x="66" y="252" width="150" height="103" rx="8" fill="#fff4e6" stroke="#e8590c"/>
+  <text x="76" y="271" font-size="13" font-weight="700" fill="#212529">Waveshare RS485</text>
+  <text x="76" y="288" font-size="13" font-weight="700" fill="#212529">CAN HAT</text>
+  <text x="76" y="305" font-size="12" fill="#495057">MCP2515 over SPI</text>
+  <text x="76" y="323" font-size="12" fill="#495057">120 Ω jumper ON</text>
+  <text x="76" y="341" font-size="12" fill="#495057">screw terminal H/L/G</text>
+  <rect x="230" y="305" width="106" height="50" rx="8" fill="#e6fcf5" stroke="#0ca678"/>
+  <text x="283" y="326" font-size="13" font-weight="700" fill="#212529" text-anchor="middle">CSI port</text>
+  <text x="283" y="344" font-size="12" fill="#495057" text-anchor="middle">15-pin</text>
+  <rect x="230" y="220" width="106" height="44" rx="8" fill="#fff5f5" stroke="#c92a2a"/>
+  <text x="283" y="240" font-size="13" font-weight="700" fill="#212529" text-anchor="middle">5 V in</text>
+  <text x="283" y="256" font-size="11" fill="#e67700" text-anchor="middle">µUSB/GPIO: TBD</text>
+  <circle cx="332" cy="162" r="13" fill="#1971c2"/><text x="332" y="167" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+
+  <!-- Camera -->
+  <rect x="200" y="410" width="150" height="74" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="275" y="434" font-size="13" font-weight="700" fill="#212529" text-anchor="middle">Camera Module 3</text>
+  <text x="275" y="452" font-size="12" fill="#495057" text-anchor="middle">standard lens, nadir</text>
+  <text x="275" y="470" font-size="12" fill="#495057" text-anchor="middle">survey + dock tag</text>
+  <circle cx="350" cy="410" r="13" fill="#0ca678"/><text x="350" y="415" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">C</text>
+  <line x1="283" y1="355" x2="283" y2="410" stroke="#0ca678" stroke-width="3"/>
+  <text x="290" y="392" font-size="11" fill="#0ca678">CSI ribbon</text>
+
+  <!-- Cube Orange+ -->
+  <rect x="420" y="140" width="320" height="330" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="440" y="168" font-size="17" font-weight="700" fill="#212529">Cube Orange+ (ArduPilot)</text>
+  <text x="440" y="190" font-size="13" fill="#495057">standard carrier board</text>
+  <text x="440" y="214" font-size="13" fill="#212529"><tspan font-weight="700">Lua bridge</tspan>: DroneCAN commands ↔</text>
+  <text x="440" y="232" font-size="13" fill="#212529">arm, modes, mission, landing descent</text>
+  <text x="440" y="256" font-size="13" fill="#212529"><tspan font-weight="700">Node ID 10</tspan> · no terminator</text>
+  <text x="440" y="280" font-size="13" fill="#495057">Flight control, failsafes, IMU, baro</text>
+  <text x="440" y="304" font-size="13" fill="#495057">TELEM 2: downward LiDAR</text>
+  <!-- port tabs: right edge -->
+  <rect x="704" y="176" width="72" height="26" rx="5" fill="#f3f0ff" stroke="#7048e8"/><text x="740" y="194" font-size="12" font-weight="700" fill="#5f3dc4" text-anchor="middle">TELEM 1</text>
+  <rect x="704" y="286" width="72" height="26" rx="5" fill="#f3f0ff" stroke="#7048e8"/><text x="740" y="304" font-size="12" font-weight="700" fill="#5f3dc4" text-anchor="middle">GPS 2</text>
+  <!-- port tabs: bottom edge -->
+  <rect x="436" y="457" width="72" height="26" rx="5" fill="#fff4e6" stroke="#e8590c"/><text x="472" y="475" font-size="12" font-weight="700" fill="#d9480f" text-anchor="middle">CAN 2</text>
+  <rect x="546" y="457" width="78" height="26" rx="5" fill="#fff5f5" stroke="#c92a2a"/><text x="585" y="475" font-size="12" font-weight="700" fill="#c92a2a" text-anchor="middle">POWER 1</text>
+  <rect x="644" y="457" width="84" height="26" rx="5" fill="#f1f3f5" stroke="#495057"/><text x="686" y="475" font-size="12" font-weight="700" fill="#343a40" text-anchor="middle">MAIN OUT</text>
+
+  <!-- RC + telemetry receiver -->
+  <rect x="820" y="150" width="280" height="80" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="836" y="174" font-size="14" font-weight="700" fill="#212529">Unified RC + telemetry receiver</text>
+  <text x="836" y="194" font-size="13" fill="#495057">debug / test failsafe only</text>
+  <text x="836" y="214" font-size="12" fill="#495057">model: chosen by the ME/EE team</text>
+  <circle cx="1082" cy="170" r="13" fill="#7048e8"/><text x="1082" y="175" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">B</text>
+  <line x1="776" y1="189" x2="820" y2="189" stroke="#7048e8" stroke-width="3"/>
+  <text x="780" y="248" font-size="11" fill="#5f3dc4">UART: MAVLink + RC</text>
+
+  <!-- GPS -->
+  <rect x="820" y="262" width="280" height="80" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="836" y="286" font-size="14" font-weight="700" fill="#212529">Holybro Micro M10 GPS</text>
+  <text x="836" y="306" font-size="13" fill="#495057">u-blox M10 + IST8310 compass</text>
+  <text x="836" y="326" font-size="12" fill="#495057">on a mast, away from power wires</text>
+  <line x1="776" y1="299" x2="820" y2="299" stroke="#7048e8" stroke-width="3"/>
+  <text x="780" y="360" font-size="11" fill="#5f3dc4">JST-GH 6-pin: UART + I2C</text>
+  <text x="780" y="374" font-size="11" fill="#5f3dc4">5V · TX · RX · SCL · SDA · GND</text>
+
+  <rect x="704" y="396" width="72" height="26" rx="5" fill="#f3f0ff" stroke="#7048e8"/><text x="740" y="414" font-size="12" font-weight="700" fill="#5f3dc4" text-anchor="middle">TELEM 2</text>
+  <rect x="820" y="388" width="280" height="80" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="836" y="412" font-size="14" font-weight="700" fill="#212529">Waveshare TOF MINIF LiDAR</text>
+  <text x="836" y="432" font-size="12" fill="#495057">D-TOF, 0.02–20 m, UART 115200</text>
+  <text x="836" y="450" font-size="12" fill="#e67700">Lua driver (RNGFND type: scripting)</text>
+  <line x1="776" y1="409" x2="820" y2="409" stroke="#7048e8" stroke-width="3"/>
+  <!-- ===== CAN bus ===== -->
+  <line x1="70" y1="525" x2="1110" y2="525" stroke="#e8590c" stroke-width="4"/>
+  <line x1="70" y1="550" x2="1110" y2="550" stroke="#1c7ed6" stroke-width="4"/>
+  <line x1="70" y1="575" x2="1110" y2="575" stroke="#343a40" stroke-width="3"/>
+  <text x="712" y="600" font-size="12" font-weight="700" fill="#212529">CAN bus (DroneCAN, 1 Mbps)</text>
+        <!-- terminators -->
+  <rect x="70" y="529" width="16" height="17" rx="2" fill="#fff3bf" stroke="#495057" stroke-width="1.5"/>
+  <rect x="1094" y="529" width="16" height="17" rx="2" fill="#fff3bf" stroke="#495057" stroke-width="1.5"/>
+  <!-- HAT stubs -->
+  <line x1="110" y1="355" x2="110" y2="525" stroke="#e8590c" stroke-width="2.5"/><circle cx="110" cy="525" r="5" fill="#e8590c"/>
+  <line x1="140" y1="355" x2="140" y2="550" stroke="#1c7ed6" stroke-width="2.5"/><circle cx="140" cy="550" r="5" fill="#1c7ed6"/>
+  <line x1="170" y1="355" x2="170" y2="575" stroke="#343a40" stroke-width="2.5"/><circle cx="170" cy="575" r="5" fill="#343a40"/>
+  <text x="96" y="602" font-size="11" fill="#495057">120 Ω on HAT</text>
+  <!-- Cube CAN2 stubs -->
+  <line x1="452" y1="483" x2="452" y2="525" stroke="#e8590c" stroke-width="2.5"/><circle cx="452" cy="525" r="5" fill="#e8590c"/>
+  <line x1="472" y1="483" x2="472" y2="550" stroke="#1c7ed6" stroke-width="2.5"/><circle cx="472" cy="550" r="5" fill="#1c7ed6"/>
+  <line x1="492" y1="483" x2="492" y2="575" stroke="#343a40" stroke-width="2.5"/><circle cx="492" cy="575" r="5" fill="#343a40"/>
+  <text x="300" y="506" font-size="11" fill="#d9480f">JST-GH 4-pin, 5 V unused</text>
+  <!-- Power board stubs (from below) -->
+  <line x1="900" y1="610" x2="900" y2="525" stroke="#e8590c" stroke-width="2.5"/><circle cx="900" cy="525" r="5" fill="#e8590c"/>
+  <line x1="930" y1="610" x2="930" y2="550" stroke="#1c7ed6" stroke-width="2.5"/><circle cx="930" cy="550" r="5" fill="#1c7ed6"/>
+  <line x1="960" y1="610" x2="960" y2="575" stroke="#343a40" stroke-width="2.5"/><circle cx="960" cy="575" r="5" fill="#343a40"/>
+
+  <!-- ===== Power section ===== -->
+  <!-- BEC -->
+  <rect x="50" y="640" width="140" height="74" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="120" y="664" font-size="14" font-weight="700" fill="#212529" text-anchor="middle">5 V 3 A+ BEC</text>
+  <text x="120" y="684" font-size="12" fill="#495057" text-anchor="middle">battery → 5 V</text>
+  <text x="120" y="702" font-size="12" fill="#495057" text-anchor="middle">Pi only</text>
+  <path d="M60 640 V600 H38 V242 H230" fill="none" stroke="#c92a2a" stroke-width="3" marker-end="url(#arrP)"/>
+  <text x="31" y="440" font-size="11" fill="#c92a2a" transform="rotate(-90 31 440)">5 V to Pi</text>
+
+  <!-- Battery (TBD) -->
+  <rect x="215" y="630" width="180" height="84" rx="10" fill="#fff9db" stroke="#e67700" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="305" y="654" font-size="14" font-weight="700" fill="#212529" text-anchor="middle">Flight battery (LiPo)</text>
+  <text x="305" y="674" font-size="12" fill="#e67700" text-anchor="middle">cells / capacity: TBD</text>
+  <text x="305" y="692" font-size="12" fill="#495057" text-anchor="middle">charged in place by</text>
+  <text x="305" y="708" font-size="12" fill="#495057" text-anchor="middle">the power board</text>
+
+  <!-- Power module (TBD) -->
+  <rect x="420" y="640" width="150" height="74" rx="10" fill="#fff9db" stroke="#e67700" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="495" y="664" font-size="14" font-weight="700" fill="#212529" text-anchor="middle">Power module</text>
+  <text x="495" y="684" font-size="12" fill="#495057" text-anchor="middle">feeds Cube POWER 1</text>
+  <text x="495" y="702" font-size="12" fill="#e67700" text-anchor="middle">model: TBD</text>
+  <path d="M570 660 H585 V483" fill="none" stroke="#c92a2a" stroke-width="3" marker-end="url(#arrP)"/>
+
+  <!-- ESCs (TBD) -->
+  <rect x="600" y="640" width="170" height="74" rx="10" fill="#fff9db" stroke="#e67700" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="685" y="664" font-size="14" font-weight="700" fill="#212529" text-anchor="middle">ESCs + motors</text>
+  <text x="685" y="684" font-size="12" fill="#e67700" text-anchor="middle">count + protocol: TBD</text>
+  <text x="685" y="702" font-size="12" fill="#495057" text-anchor="middle">(PWM or DShot)</text>
+  <line x1="700" y1="483" x2="700" y2="640" stroke="#868e96" stroke-width="2.5" stroke-dasharray="2 4"/>
+  <text x="706" y="620" font-size="11" fill="#495057">motor signals</text>
+
+  <!-- Main power rail -->
+  <line x1="120" y1="762" x2="990" y2="762" stroke="#c92a2a" stroke-width="5"/>
+  <text x="560" y="782" font-size="12" font-weight="700" fill="#c92a2a">battery main power</text>
+  <line x1="120" y1="762" x2="120" y2="714" stroke="#c92a2a" stroke-width="3"/>
+  <line x1="305" y1="762" x2="305" y2="714" stroke="#c92a2a" stroke-width="5"/>
+  <line x1="495" y1="762" x2="495" y2="714" stroke="#c92a2a" stroke-width="3"/>
+  <line x1="685" y1="762" x2="685" y2="714" stroke="#c92a2a" stroke-width="3"/>
+  <line x1="990" y1="762" x2="990" y2="740" stroke="#e67700" stroke-width="3" stroke-dasharray="6 4"/>
+  
+
+  <!-- Power board -->
+  <rect x="820" y="610" width="280" height="130" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="836" y="636" font-size="15" font-weight="700" fill="#212529">Power board (ME/EE, on drone)</text>
+  <text x="836" y="656" font-size="13" fill="#495057">charge control + sensing</text>
+  <text x="836" y="676" font-size="13" fill="#212529"><tspan font-weight="700">Node ID 30</tspan> · 120 Ω on board</text>
+  <text x="836" y="696" font-size="12" fill="#e67700">CAN connector + charge path: TBD</text>
+  <text x="836" y="716" font-size="12" fill="#495057">sends CHARGE_STATUS, battery info</text>
+
+  <!-- Drone-side contacts -->
+  <rect x="820" y="790" width="200" height="0" fill="none"/>
+  <line x1="880" y1="740" x2="880" y2="852" stroke="#c92a2a" stroke-width="4"/>
+  <line x1="920" y1="740" x2="920" y2="852" stroke="#343a40" stroke-width="4"/>
+  <text x="928" y="802" font-size="12" font-weight="700" fill="#212529">landing-gear contacts + / −</text>
+  <text x="928" y="818" font-size="11" fill="#495057">power only, touch when docked</text>
+
+  <!-- ================= STATION ================= -->
+  <rect x="820" y="852" width="280" height="80" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="836" y="876" font-size="14" font-weight="700" fill="#212529">Dock charging contacts (+ / −)</text>
+  <text x="836" y="896" font-size="12" fill="#495057">energized only when the drone is docked</text>
+  <text x="836" y="914" font-size="12" fill="#e67700">contact verification circuit: where? TBD</text>
+
+  <rect x="820" y="960" width="280" height="80" rx="10" fill="#fff9db" stroke="#e67700" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="836" y="984" font-size="14" font-weight="700" fill="#212529">Charger / power supply</text>
+  <text x="836" y="1004" font-size="12" fill="#495057">DC output to the dock contacts</text>
+  <text x="836" y="1022" font-size="12" fill="#e67700">voltage / current / model: TBD</text>
+  <line x1="960" y1="960" x2="960" y2="932" stroke="#c92a2a" stroke-width="4" marker-end="url(#arrP)"/>
+
+  <rect x="820" y="1080" width="280" height="64" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="836" y="1106" font-size="14" font-weight="700" fill="#212529">Grid power (mains)</text>
+  <text x="836" y="1126" font-size="12" fill="#495057">waterfront park / marina / station</text>
+  <line x1="960" y1="1080" x2="960" y2="1040" stroke="#c92a2a" stroke-width="4" marker-end="url(#arrP)"/>
+  <path d="M820 1112 H570 V942" fill="none" stroke="#c92a2a" stroke-width="2.5" marker-end="url(#arrP)"/>
+
+  <rect x="50" y="860" width="300" height="84" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="66" y="884" font-size="14" font-weight="700" fill="#212529">AprilTag landing pad</text>
+  <text x="66" y="904" font-size="12" fill="#495057">nested large + small tags, weatherproof</text>
+  <text x="66" y="922" font-size="12" fill="#495057">optical only: seen by the drone camera</text>
+  <circle cx="332" cy="880" r="13" fill="#0ca678"/><text x="332" y="885" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">C</text>
+
+  <rect x="420" y="860" width="300" height="84" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="436" y="884" font-size="14" font-weight="700" fill="#212529">Wi-Fi access point</text>
+  <text x="436" y="904" font-size="12" fill="#495057">dock network for uploads + commands</text>
+  <text x="436" y="922" font-size="12" fill="#495057">powered from grid</text>
+  <circle cx="702" cy="880" r="13" fill="#1971c2"/><text x="702" y="885" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+
+  <rect x="50" y="980" width="480" height="80" rx="10" fill="#fff" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="66" y="1004" font-size="13" font-weight="700" fill="#212529">Not wired (reference only)</text>
+  <text x="66" y="1024" font-size="12" fill="#495057">3–4 fixed reference markers of known size above the</text>
+  <text x="66" y="1042" font-size="12" fill="#495057">high-water line: scale + alignment for the analysis app</text>
+
+  <!-- ================= GROUND ================= -->
+  <rect x="1180" y="140" width="570" height="200" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="1198" y="168" font-size="17" font-weight="700" fill="#212529">Groundside laptop</text>
+  <text x="1198" y="194" font-size="13" fill="#212529"><tspan font-weight="700">Mission Ctrl Script</tspan>: scheduling + path planning,</text>
+  <text x="1198" y="212" font-size="13" fill="#212529">receives uploads, monitors health</text>
+  <text x="1198" y="238" font-size="13" fill="#212529"><tspan font-weight="700">Mission Planner</tspan>: debug only</text>
+  <text x="1198" y="262" font-size="13" fill="#212529"><tspan font-weight="700">Shoreline analysis app</tspan> (runs here or on a server)</text>
+  <text x="1198" y="292" font-size="12" fill="#e67700">laptop ↔ dock AP: Wi-Fi or Ethernet — TBD</text>
+  <circle cx="1732" cy="160" r="13" fill="#1971c2"/><text x="1732" y="165" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+  <rect x="1278" y="327" width="64" height="26" rx="5" fill="#f1f3f5" stroke="#212529"/><text x="1310" y="345" font-size="12" font-weight="700" fill="#212529" text-anchor="middle">USB</text>
+
+  <rect x="1180" y="400" width="270" height="96" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="1196" y="424" font-size="14" font-weight="700" fill="#212529">Unified RC + telemetry</text>
+  <text x="1196" y="442" font-size="14" font-weight="700" fill="#212529">ground unit</text>
+  <text x="1196" y="464" font-size="12" fill="#495057">debug / test failsafe only</text>
+  <circle cx="1432" cy="420" r="13" fill="#7048e8"/><text x="1432" y="425" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">B</text>
+  <line x1="1310" y1="353" x2="1310" y2="400" stroke="#212529" stroke-width="3"/>
+
+  <rect x="1480" y="400" width="270" height="96" rx="10" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="1496" y="424" font-size="14" font-weight="700" fill="#212529">Remote controller</text>
+  <text x="1496" y="444" font-size="12" fill="#495057">operator takeover during tests;</text>
+  <text x="1496" y="462" font-size="12" fill="#495057">not part of the autonomous product</text>
+  <line x1="1450" y1="448" x2="1480" y2="448" stroke="#212529" stroke-width="3" marker-start="url(#arr)" marker-end="url(#arr)"/>
+
+  <!-- Key: links -->
+  <text x="1180" y="560" font-size="16" font-weight="700" fill="#212529">Wireless / optical links</text>
+  <circle cx="1192" cy="586" r="12" fill="#1971c2"/><text x="1192" y="591" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+  <text x="1212" y="584" font-size="13" fill="#212529"><tspan font-weight="700">Wi-Fi</tspan>: Pi ↔ dock AP ↔ laptop</text>
+  <text x="1212" y="602" font-size="12" fill="#495057">schedule, flight path, status, image uploads</text>
+  <circle cx="1192" cy="630" r="12" fill="#7048e8"/><text x="1192" y="635" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">B</text>
+  <text x="1212" y="628" font-size="13" fill="#212529"><tspan font-weight="700">RC + telemetry radio</tspan>: Cube TELEM 1 ↔ ground unit</text>
+  <text x="1212" y="646" font-size="12" fill="#495057">debug only: operator override + streamed drone state</text>
+  <circle cx="1192" cy="674" r="12" fill="#0ca678"/><text x="1192" y="679" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">C</text>
+  <text x="1212" y="672" font-size="13" fill="#212529"><tspan font-weight="700">Optical</tspan>: drone camera sees the AprilTag pad</text>
+  <text x="1212" y="690" font-size="12" fill="#495057">final metres of docking (LAND_TARGET via CAN)</text>
+
+  <!-- Key: wires -->
+  <text x="1180" y="740" font-size="16" font-weight="700" fill="#212529">Wire types</text>
+  <line x1="1182" y1="764" x2="1232" y2="764" stroke="#e8590c" stroke-width="4"/><line x1="1182" y1="774" x2="1232" y2="774" stroke="#1c7ed6" stroke-width="4"/>
+  <text x="1244" y="774" font-size="13" fill="#212529">CAN_H / CAN_L (DroneCAN) + GND</text>
+  <line x1="1182" y1="800" x2="1232" y2="800" stroke="#7048e8" stroke-width="3"/><text x="1244" y="805" font-size="13" fill="#212529">UART / I2C (JST-GH)</text>
+  <line x1="1182" y1="826" x2="1232" y2="826" stroke="#0ca678" stroke-width="3"/><text x="1244" y="831" font-size="13" fill="#212529">CSI camera ribbon</text>
+  <line x1="1182" y1="852" x2="1232" y2="852" stroke="#868e96" stroke-width="3" stroke-dasharray="2 4"/><text x="1244" y="857" font-size="13" fill="#212529">motor signals (PWM / DShot)</text>
+  <line x1="1182" y1="878" x2="1232" y2="878" stroke="#c92a2a" stroke-width="4"/><text x="1244" y="883" font-size="13" fill="#212529">power</text>
+  <line x1="1182" y1="904" x2="1232" y2="904" stroke="#212529" stroke-width="3"/><text x="1244" y="909" font-size="13" fill="#212529">USB</text>
+  <rect x="1182" y="920" width="50" height="22" rx="4" fill="#fff9db" stroke="#e67700" stroke-width="2" stroke-dasharray="6 4"/><text x="1244" y="936" font-size="13" fill="#212529">part or detail to confirm</text>
+
+  <!-- Open questions -->
+  <text x="1180" y="990" font-size="16" font-weight="700" fill="#e67700">To confirm with the ME/EE team</text>
+  <text x="1180" y="1014" font-size="13" fill="#212529">1. Battery: cells, capacity, connector</text>
+  <text x="1180" y="1034" font-size="13" fill="#212529">2. ESCs: count, protocol; power module model</text>
+  <text x="1180" y="1054" font-size="13" fill="#212529">3. How the power board ties into the battery (charge path)</text>
+  <text x="1180" y="1074" font-size="13" fill="#212529">4. Charger output; where contact verification lives</text>
+  <text x="1180" y="1094" font-size="13" fill="#212529">5. Power board CAN connector; Pi 5 V via micro-USB or GPIO</text>
+  <text x="1180" y="1114" font-size="13" fill="#212529">6. Laptop ↔ dock AP: Wi-Fi or Ethernet</text>
+</svg>

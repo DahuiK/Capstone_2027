@@ -1,0 +1,9 @@
+# DRONE_CMD: Pi -> Cube (Lua bridge). Answered by CmdAck with the same seq.
+uint8 ARM = 1
+uint8 DISARM = 2
+uint8 START_MISSION = 3
+uint8 RTL = 4
+uint8 LAND = 5            # start the precision descent
+uint8 ABORT = 6
+uint8 command
+uint8 seq

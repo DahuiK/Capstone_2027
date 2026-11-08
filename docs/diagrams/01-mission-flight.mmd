@@ -1,0 +1,31 @@
+flowchart TD
+  A([Docked, charging]) --> B{Scheduled time<br/>and weather OK?}
+  B -- no --> A
+  B -- yes --> C["Preflight checks<br/>battery full, GPS 3D fix, storage free,<br/>wind under limit, geofence loaded"]
+  C -- fail --> L1[Log reason, stay docked] --> A
+  C -- pass --> D{Unfinished mission<br/>saved?}
+  D -- yes --> E[Load remaining waypoints]
+  D -- no --> F["Load fixed daily waypoint file<br/>same positions, altitude, heading"]
+  E --> G[Send waypoints to Cube: MISSION_ITEM over CAN]
+  F --> G
+  G --> H[Arm, take off to survey altitude]
+  H --> I[Fly to next waypoint]
+  I --> J[Capture trigger → Flowchart 2]
+  J --> K{Battery below<br/>return reserve?}
+  K -- yes --> M[Save progress: last waypoint index]
+  K -- no --> N{More waypoints?}
+  N -- yes --> I
+  N -- no --> O[Mark mission complete]
+  M --> P[Return to dock GPS position]
+  O --> P
+  P --> Q[Hold above dock, start tag search]
+  Q --> R{Tag detected?}
+  R -- no, retry limit hit --> S[Land at alternate safe point, alert team]
+  R -- no --> Q
+  R -- yes --> T["Precision descent: LAND_TARGET<br/>offsets to Lua bridge"]
+  T --> U{Tag lost<br/>mid-descent?}
+  U -- yes --> V[Climb and re-search] --> Q
+  U -- no --> W[Touchdown, disarm]
+  W --> X{Dock reports<br/>charging?}
+  X -- no --> Y["Lift off, re-centre, retry<br/>limited attempts"] --> Q
+  X -- yes --> Z([Docked → upload in Flowchart 2])

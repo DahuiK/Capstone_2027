@@ -1,0 +1,49 @@
+flowchart TD
+  BOOT(["BOOT<br/>CAN up · Cube + power board heard · clock set from DRONE_STATE"])
+  IDLE(["DOCKED_IDLE<br/>charging · poll laptop GET /next_mission every 10 s"])
+  PRE(["PREFLIGHT<br/>battery full · GPS 3D fix · storage free · wind OK"])
+  LOAD(["LOAD_MISSION<br/>send MISSION_ITEMs · wait for every CMD_ACK"])
+  UND(["UNDOCK<br/>CHARGE_CMD stop · wait contacts_live = 0"])
+  ARM(["ARM<br/>DRONE_CMD ARM → START_MISSION"])
+  SUR(["SURVEY<br/>at each waypoint: capture + geotag"])
+  RET(["RETURN<br/>DRONE_CMD RTL · hold above dock GPS point"])
+  TAG(["TAG_SEARCH<br/>camera 640×480 · look for the dock tag"])
+  PL(["PRECISION_LAND<br/>DRONE_CMD LAND · stream LAND_TARGET ~10 Hz"])
+  DCK(["DOCK_CHECK<br/>landed + disarmed · CHARGE_STATUS docked?"])
+  CHG(["DOCKED_CHARGING<br/>CHARGE_CMD start · upload manifest + images"])
+
+  BOOT --> IDLE
+  IDLE -->|mission received| PRE
+  PRE -->|all checks pass| LOAD
+  LOAD -->|all items acked| UND
+  UND -->|contacts off| ARM
+  ARM -->|both acked| SUR
+  SUR -->|last waypoint done| RET
+  RET -->|over the dock| TAG
+  TAG -->|tag detected| PL
+  PL -->|touchdown| DCK
+  DCK -->|docked = 1| CHG
+  CHG -->|laptop confirms all images verified, battery full| IDLE
+
+  NOFLY["Stay docked<br/>report reason to laptop"]
+  IDLE -->|laptop unreachable| NOFLY
+  PRE -->|check fails| NOFLY
+  LOAD -->|upload fails 3×| NOFLY
+  ARM -->|arming refused| NOFLY
+  NOFLY --> IDLE
+
+  SUR -->|"battery < reserve or storage low<br/>(save last waypoint index)"| RET
+  SUR -->|critical fault| RET
+  PL -->|tag lost > 1 s: climb| TAG
+  DCK -->|not seated: lift off, retry ≤ 3| TAG
+
+  ALT["ALT_LAND<br/>land at a safe point · alert laptop"]
+  FAULT["FAULT<br/>wait for operator"]
+  TAG -->|not found after N tries| ALT
+  ALT --> FAULT
+  BOOT -->|node missing after 30 s| FAULT
+
+  classDef state fill:#e7f5ff,stroke:#1971c2,color:#212529
+  classDef bad fill:#fff5f5,stroke:#c92a2a,color:#212529
+  class BOOT,IDLE,PRE,LOAD,UND,ARM,SUR,RET,TAG,PL,DCK,CHG state
+  class NOFLY,ALT,FAULT bad

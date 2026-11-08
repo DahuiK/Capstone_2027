@@ -1,0 +1,5 @@
+# CHARGE_STATUS: power board -> everyone, 1 Hz
+bool docked               # seated on the dock contacts
+bool contacts_live        # contacts energized (Lua blocks arming while true)
+bool charging
+uint8 fault_code          # 0 = no fault

@@ -1,0 +1,38 @@
+flowchart TD
+  subgraph PLAN[Path planning: offline, once per site]
+    direction TB
+    P1["Load site area<br/>GeoJSON polygon"] --> P2["Generate survey lines<br/>altitude, spacing, overlap"]
+    P2 --> P3["Waypoints + capture points<br/>fixed IDs, same every day"]
+    P3 --> P4{"Inside geofence and<br/>flight time under limit?"}
+    P4 -- no --> P2
+    P4 -- yes --> P5["Save versioned mission file<br/>missions/site_vN.json"]
+  end
+
+  subgraph RUN[Scheduler loop: runs all day]
+    direction TB
+    S1([Start: load config + mission file]) --> S2{"Inside today's<br/>flight window?"}
+    S2 -- no --> S9[Wait 1 min] --> S2
+    S2 -- yes --> S3{"Already flew today<br/>or storm re-fly needed?"}
+    S3 -- flew, no re-fly --> S9
+    S3 -- fly --> S4{"Weather OK?<br/>wind, rain, visibility"}
+    S4 -- no --> S5[Log skip reason, retry next slot] --> S9
+    S4 -- yes --> S6{"Pi status:<br/>DOCKED_IDLE, battery full?"}
+    S6 -- no --> S9
+    S6 -- yes --> S7["Mark mission READY<br/>log lake level for the record"]
+    S7 --> S8["Pi polls → serve mission:<br/>ID, waypoints, capture points"]
+  end
+
+  subgraph SERVE[Image upload: Pi → laptop, while docked and charging]
+    direction TB
+    U1["POST /upload/manifest<br/>mission ID + list of images with SHA-256"] --> U2["POST /upload<br/>one image + sidecar"]
+    U2 --> U3{"SHA-256 matches<br/>the manifest?"}
+    U3 -- no --> U4["Reject → Pi re-sends that image"] --> U2
+    U3 -- yes --> U5["Store image, mark it verified, ack"]
+    U5 --> U6{"Every image in the<br/>manifest verified?"}
+    U6 -- no --> U2
+    U6 -- yes --> U7["Mark mission COMPLETE<br/>→ Pi may delete its local copies"]
+    U7 --> U8["Images ready for the separate<br/>shoreline analysis app"]
+  end
+
+  P5 -.-> S1
+  S8 ~~~ U1

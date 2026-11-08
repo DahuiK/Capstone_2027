@@ -1,0 +1,5 @@
+# LAND_TARGET: Pi -> Cube, ~10 Hz during docking. Body frame, metres.
+float32 x_m               # + = tag is forward of the drone
+float32 y_m               # + = tag is right of the drone
+float32 distance_m        # camera-estimated distance to the tag
+bool valid                # false = tag not currently visible

@@ -1,0 +1,40 @@
+sequenceDiagram
+  autonumber
+  participant L as Laptop (Ctrl Script)
+  participant P as Pi (Mgmt Script)
+  participant C as Cube (Lua + ArduPilot)
+  participant B as Power board
+  B-->>P: CHARGE_STATUS (docked, charging) 1 Hz
+  B-->>C: CHARGE_STATUS (same broadcast)
+  P->>L: GET /next_mission (every 10 s)
+  L-->>P: mission (ID, waypoints, capture points)
+  P->>P: preflight checks
+  loop each waypoint
+    P->>C: MISSION_ITEM
+    C-->>P: CMD_ACK
+  end
+  P->>B: CHARGE_CMD stop
+  B-->>P: CHARGE_STATUS contacts_live = 0
+  P->>C: DRONE_CMD ARM
+  C-->>P: CMD_ACK ok (interlock passed)
+  P->>C: DRONE_CMD START_MISSION
+  loop survey
+    C-->>P: DRONE_STATE 10 Hz
+    P->>P: capture + geotag at each waypoint
+  end
+  P->>C: DRONE_CMD RTL
+  P->>C: DRONE_CMD LAND (precision descent)
+  loop docking
+    P->>C: LAND_TARGET ~10 Hz (tag offsets)
+  end
+  C-->>P: DRONE_STATE landed, disarmed
+  B-->>P: CHARGE_STATUS docked = 1
+  P->>B: CHARGE_CMD start
+  P->>L: POST /upload/manifest (mission ID, images + SHA-256)
+  loop each image
+    P->>L: POST /upload (image + sidecar)
+    L-->>P: ack if SHA-256 matches, else re-send
+  end
+  L-->>P: mission COMPLETE (all verified)
+  P->>P: delete local copies
+  Note over L: images handed to the separate<br/>shoreline analysis app

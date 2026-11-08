@@ -1,0 +1,37 @@
+flowchart TD
+  T([update every 50 ms]) --> R["Read all pending DroneCAN messages"]
+  R --> D{Message type?}
+  D -- DRONE_CMD --> C1{"Command allowed<br/>in current state?"}
+  C1 -- no --> NACK[CMD_ACK: refused + reason]
+  C1 -- yes --> C2["ARM → arming:arm()<br/>START_MISSION → mode AUTO<br/>RTL → mode RTL<br/>LAND → precision descent on<br/>ABORT → mode RTL"]
+  C2 --> ACK[CMD_ACK: ok]
+  D -- MISSION_ITEM --> M1["mission:set_item(index, lat, lon, alt)"] --> M2{"All items received?"}
+  M2 -- yes --> ACK
+  M2 -- no --> NEXT
+  D -- LAND_TARGET --> L1["Store tag offset + timestamp"]
+  D -- CHARGE_STATUS --> CH1["Store contacts_live, docked"]
+  D -- "Pi NodeStatus" --> HB["last_pi_seen = now"]
+  NACK --> NEXT
+  ACK --> NEXT
+  L1 --> NEXT
+  CH1 --> NEXT
+  HB --> NEXT
+  NEXT["Safety checks"] --> S1{"contacts_live or<br/>no power-board status > 2 s?"}
+  S1 -- yes --> S2["Arming blocked<br/>(aux auth failed)"]
+  S1 -- no --> S3["Arming allowed"]
+  S2 --> W
+  S3 --> W
+  W{"Flying and Pi silent > 2 s?"} -- yes --> W1["Mode RTL once, warn GCS"]
+  W -- no --> PL
+  W1 --> PL
+  PL{"Precision descent active?"} -- no --> LID
+  PL -- yes --> PL1{"Target fresh < 0.5 s?"}
+  PL1 -- no --> PL2["Hold position; climb if stale > 1 s"]
+  PL1 -- yes --> PL3["Guided velocity: horizontal = gain × offset (clamped)<br/>descent rate slows near ground (LiDAR)"]
+  PL3 --> PL4{"LiDAR height < 0.3 m?"}
+  PL4 -- yes --> PL5["Mode LAND → touchdown"]
+  PL2 --> LID
+  PL4 -- no --> LID
+  PL5 --> LID
+  LID["LiDAR driver: read UART bytes,<br/>parse frames, feed rangefinder"] --> PUB["Every 100 ms: publish DRONE_STATE<br/>mode, armed, position, attitude,<br/>battery, GPS time"]
+  PUB --> T

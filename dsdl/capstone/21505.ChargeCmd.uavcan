@@ -1,0 +1,5 @@
+# CHARGE_CMD: Pi -> power board. Answered by CmdAck with the same seq.
+uint8 START = 1
+uint8 STOP = 2            # also de-energizes the contacts
+uint8 command
+uint8 seq

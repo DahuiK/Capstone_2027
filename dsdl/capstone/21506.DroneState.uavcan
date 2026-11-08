@@ -1,0 +1,11 @@
+# DRONE_STATE: Cube (Lua bridge) -> Pi, 10 Hz
+uint8 mode                # ArduPilot mode number
+bool armed
+int32 lat_e7
+int32 lon_e7
+float32 alt_m             # metres above home
+float32 roll_rad
+float32 pitch_rad
+float32 yaw_rad
+uint8 battery_pct
+uint64 gps_time_us        # GPS time, microseconds since Unix epoch

@@ -1,0 +1,13 @@
+# Shoreline analysis app (runs on the Mac / ground server, never on the drone)
+numpy
+opencv-python
+scikit-image
+shapely
+pandas
+matplotlib
+piexif          # read geotags from drone JPEGs
+tqdm
+torch           # uses the Mac GPU (MPS) on Apple Silicon
+torchvision
+segmentation-models-pytorch
+jupyter
