@@ -49,7 +49,7 @@ sudo systemctl enable can0.service
 echo "== Project venv (sees apt's picamera2 + OpenCV) =="
 python3 -m venv --system-site-packages "$VENV"
 "$VENV/bin/pip" install --upgrade pip
-"$VENV/bin/pip" install dronecan python-can pupil-apriltags piexif psutil pyyaml
+"$VENV/bin/pip" install dronecan pupil-apriltags piexif psutil pyyaml
 
 echo
 echo "Done. Reboot, then:"
