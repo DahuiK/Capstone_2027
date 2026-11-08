@@ -1,7 +1,8 @@
 # Onboard code (Raspberry Pi 5, and the Ubuntu VM for simulation)
+# python-can is deliberately NOT installed: dronecan then uses its built-in Linux SocketCAN driver
+# (python-can 4.6 breaks dronecan with NotImplementedError in flush_tx_buffer).
 # picamera2 comes from apt on the Pi (sudo apt install python3-picamera2), not pip
 dronecan
-python-can
 opencv-python-headless
 pupil-apriltags
 piexif

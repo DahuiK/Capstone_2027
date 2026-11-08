@@ -30,7 +30,7 @@ Tools/environment_install/install-prereqs-ubuntu.sh -y
 echo "== Project Python venv (kept separate from ROS / system Python) =="
 python3 -m venv "$VENV"
 "$VENV/bin/pip" install --upgrade pip
-"$VENV/bin/pip" install dronecan python-can pymavlink pyyaml
+"$VENV/bin/pip" install dronecan pymavlink pyyaml
 
 echo
 echo "Done. Next:"
